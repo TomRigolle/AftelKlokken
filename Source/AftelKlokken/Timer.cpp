@@ -27,9 +27,9 @@ void ATimer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (IsCountingDown && _timeLeft > 0)
+	if (IsCountingDown && m_timeLeft > 0)
 	{
-		SetTimeLeft(FMath::Clamp(_timeLeft - DeltaTime, 0, StartTime));
+		SetTimeLeft(m_timeLeft - DeltaTime);
 	}
 
 	if (IsKeyJustPressed(ResetKey))
@@ -40,6 +40,11 @@ void ATimer::Tick(float DeltaTime)
 	if (IsKeyJustPressed(StartStopKey))
 	{
 		IsCountingDown = !IsCountingDown;
+	}
+
+	if (IsKeyJustPressed(ToggleVisibilityKey))
+	{
+		Widget->SetVisibility(!Widget->IsWidgetVisible());
 	}
 }
 
@@ -58,16 +63,18 @@ void ATimer::ResetTimer()
 	SetTimeLeft(StartTime);
 }
 
-float  ATimer::GetTimeLeft() const 
+float ATimer::GetTimeLeft() const 
 { 
-	return _timeLeft; 
+	return m_timeLeft;
 }
 
-void  ATimer::SetTimeLeft(float newValue)
+void ATimer::SetTimeLeft(float newValue)
 {
-	if (_timeLeft != newValue)
+	newValue = FMath::Clamp(newValue, 0, StartTime);
+
+	if (m_timeLeft != newValue)
 	{
-		_timeLeft = newValue;
+		m_timeLeft = newValue;
 		OnTimeChanged.Broadcast();
 	}
 }

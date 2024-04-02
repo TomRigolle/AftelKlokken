@@ -40,33 +40,36 @@ public:
 // VARIABLES
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
-	UWidgetComponent* Widget;
+		UWidgetComponent* Widget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool IsCountingDown = true;
+		bool IsCountingDown = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float StartTime = 10;
+		float StartTime = 10;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FKey ResetKey;
+		FKey ResetKey;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FKey StartStopKey;
+		FKey StartStopKey;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FKey ToggleVisibilityKey;
 
 private:
-	float _timeLeft;
+	float m_timeLeft;
 
 
 // FUNCTIONS
 public:
 	UFUNCTION(BlueprintCallable)
-	FText SecondsToTimerText(float time);
+		FText SecondsToTimerText(float time);
 
 	void ResetTimer();
 
 	UFUNCTION(BlueprintCallable)
-	float GetTimeLeft() const;
+		float GetTimeLeft() const;
 
 private:
 	void SetTimeLeft(float newValue);
